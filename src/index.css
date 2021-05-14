@@ -11,3 +11,25 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.landing{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: white;
+z-index: 100;
+  height:100vh;
+  width:100vw;
+
+
+  font-family: "Glacial Indifference",serif;
+}
+.landing div {
+  display:flex;
+  flex-direction: row;
+  color:black !important;
+  font-weight: bolder;
+  z-index: 100;
+}
