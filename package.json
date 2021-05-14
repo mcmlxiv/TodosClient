@@ -64,6 +64,6 @@
     "@types/lodash": "^4.14.168",
     "@types/react-lottie": "^1.2.5",
     "webpack": "^4.44.2"
-  },
+  }
 
 }

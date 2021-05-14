@@ -59,7 +59,7 @@ const MainApp: React.FC = () => {
         padding: 0,
       },
       [theme.breakpoints.down("md")]: {
-        marginTop: `${!open ? "31.5rem" : "12rem"}`,
+        marginTop: `${!open ? "31.5rem" : "15rem"}`,
         padding: 0,
         marginLeft: 0,
       },
