@@ -19,10 +19,13 @@ const DeleteUser = ({ language }: { language: boolean }) => {
       margin: 0,
       paddingTop: "1rem",
       paddingBottom: "1rem",
-      transform: "scale(10rem)",
+      transform: "translateY(18rem)",
+
       display: "flex",
       justifyContent: "center",
       [theme.breakpoints.down("md")]: {
+        transform: "translateY(0)",
+
         backgroundColor: "none",
       },
     },
@@ -44,8 +47,7 @@ const DeleteUser = ({ language }: { language: boolean }) => {
         borderTop: `solid ${
           newTheme.palette.type === "dark" ? "white" : "black"
         }`,
-        padding: "1rem",
-        marginTop: "1rem",
+        padding: "0.5rem",
       },
     },
   }));
@@ -104,7 +106,7 @@ const DeleteUser = ({ language }: { language: boolean }) => {
             <Typography
               variant={"h6"}
               align={"center"}
-              style={{ fontSize: "1rem" }}
+              style={{ fontSize: "1.1rem" }}
               gutterBottom
             >
               {language ? "Delete Account" : "刪除帳戶"}
