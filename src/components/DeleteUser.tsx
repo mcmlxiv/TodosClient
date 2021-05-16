@@ -101,7 +101,12 @@ const DeleteUser = ({ language }: { language: boolean }) => {
               logout
             )}
           >
-            <Typography variant={"h5"} align={"center"} gutterBottom>
+            <Typography
+              variant={"h6"}
+              align={"center"}
+              style={{ fontSize: "1rem" }}
+              gutterBottom
+            >
               {language ? "Delete Account" : "刪除帳戶"}
             </Typography>
           </button>
