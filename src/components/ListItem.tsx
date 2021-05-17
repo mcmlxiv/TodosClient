@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import ContentEditable from "react-contenteditable";
 import { makeStyles } from "@material-ui/core/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -14,8 +14,8 @@ import {
   Card,
   Typography,
 } from "@material-ui/core";
-
-import { listProps } from "../types.model";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import clsx from "clsx";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
@@ -23,7 +23,10 @@ import CallMadeIcon from "@material-ui/icons/CallMade";
 import CallReceivedIcon from "@material-ui/icons/CallReceived";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SaveIcon from "@material-ui/icons/Save";
+import AccessAlarmIcon from "@material-ui/icons/AccessAlarm";
 import { CrudHandlingTodo } from "../hooks/CrudContext";
+import { listProps } from "../types.model";
+import { Howl, Howler } from "howler";
 
 //Passing All list props to render
 const ListItem: React.FC<listProps> = ({
@@ -131,7 +134,40 @@ const ListItem: React.FC<listProps> = ({
     //when drawer is closed setOpen set to false and drawer open SetOpen is true
     setOpen(!open);
   };
+  //Date Picker and sound
+  const [currentDate, setCurrentDate] = useState<Date | null>(new Date());
+  const [alarmTime, setAlarmTime] = useState<Date | null>(new Date());
+  const [showClock, setShowClock] = useState(false);
+  //check for times and set alarm based on the difference
+  const checkAlarmClock = () => {
+    setCurrentDate(new Date());
+    if (alarmTime && currentDate) {
+      let timeNeeded = alarmTime?.getTime() - currentDate?.getTime();
+      const sound = new Howl({
+        src: [
+          "https://dight310.byu.edu/media/audio/FreeLoops.com/2/2/Desk%20Bell%20Sound.wav-19107-Free-Loops.com.mp3",
+        ],
+        loop: true,
+        volume: 0.5,
+      });
+
+      setTimeout(() => {
+        sound.play();
+
+        if (window.confirm("Times up!!")) {
+          setTimeout(() => {
+            sound.stop();
+          }, 10000);
+        }
+
+        Howler.volume(0.5);
+      }, timeNeeded);
+    }
+  };
+
+  //language translate values
   const { language } = React.useContext(CrudHandlingTodo);
+  //Mui styling\
   const classes = useStyles();
   return (
     <Grid
@@ -270,21 +306,49 @@ const ListItem: React.FC<listProps> = ({
             >
               {language ? todoChange : "在編輯: "} {date}
               {todosActive && (
-                <Typography
-                  variant="body2"
-                  color={"textSecondary"}
-                  paragraph={true}
-                  align={"center"}
-                  className={classes.note}
-                >
-                  &#42;
-                  {language ? "Click the text to edit" : "點擊文字進行編輯"}
-                  <br />
-                  &#42;
-                  {language
-                    ? "Then click update to save the edit"
-                    : " 然後點擊更新以保存修改”"}
-                </Typography>
+                <>
+                  <Typography
+                    variant="body2"
+                    color={"textSecondary"}
+                    paragraph={true}
+                    align={"center"}
+                    className={classes.note}
+                  >
+                    &#42;
+                    {language ? "Click the text to edit" : "點擊文字進行編輯"}
+                    <br />
+                    &#42;
+                    {language
+                      ? "Then click update to save the edit"
+                      : " 然後點擊更新以保存修改”"}
+                  </Typography>
+                  <Tooltip
+                    title={`${language ? `Set an alarm` : `設置鬧鈴`}`}
+                    arrow
+                  >
+                    <IconButton
+                      aria-label="Alarm clock"
+                      onClick={() => setShowClock(!showClock)}
+                      style={{ transform: "translateX(-0.43rem)" }}
+                    >
+                      <AccessAlarmIcon />
+                    </IconButton>
+                  </Tooltip>
+                  {showClock && (
+                    <div style={{ transform: "scale(0.8)" }}>
+                      <DatePicker
+                        selected={alarmTime}
+                        onChange={(date: Date) => {
+                          setAlarmTime(date);
+                        }}
+                        onSelect={checkAlarmClock}
+                        timeInputLabel="Time:"
+                        dateFormat="MM/dd/yyyy h:mm aa"
+                        showTimeInput
+                      />
+                    </div>
+                  )}
+                </>
               )}
             </Typography>
           </CardContent>

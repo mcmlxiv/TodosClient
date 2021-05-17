@@ -65,6 +65,7 @@ const MainApp: React.FC = () => {
       },
     },
     innerList: {
+      paddingTop: "5rem",
       display: "flex",
       [theme.breakpoints.down("md")]: {
         flexDirection: "column",
