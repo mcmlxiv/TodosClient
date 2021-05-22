@@ -19,12 +19,12 @@ const DeleteUser = ({ language }: { language: boolean }) => {
       margin: 0,
       paddingTop: "1rem",
       paddingBottom: "1rem",
-      transform: "translateY(18rem)",
+    
 
       display: "flex",
       justifyContent: "center",
       [theme.breakpoints.down("md")]: {
-        transform: "translateY(0)",
+        
 
         backgroundColor: "none",
       },
